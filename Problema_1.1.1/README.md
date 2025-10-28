@@ -1,6 +1,8 @@
-## Notas Importantes 
+# Notas Importantes
 
-El proyecto se divide en dos carpetas importantes:
+El proyecto está organizado en dos carpetas principales:
 
-- `src`: Donde está el archivo *.java* sin compilar
-- `bin`: Donde está el archivo *compilado* formato *.class*
+- **`src/`**: Contiene los archivos fuente con extensión `.java`.
+- **`bin/`**: Contiene los archivos compilados generados automáticamente con extensión `.class`.
+
+---
