@@ -23,13 +23,15 @@ public class App {
     // si Amedio se cansa, Marco va un 10% más lento
     final float REDUCCION_VELOCIDAD_MARCO_POR_AMEDIO_CANSADO = 0.1f;
 
+    final float PROBABILIDAD_AVISTAMIENTO_MADRE_MARCO = 0.5f; // km
+
     // Calcula si Amedio se cansa o no
     public boolean AmedioSeCansa() {
         double probabilidadAmedioSeCansa = random.nextDouble();
 
         if (probabilidadAmedioSeCansa <= PROBABILIDAD_AMEDIO_SE_CANSE) {
             System.out
-                    .println("He tenido que cargar a Amedio porque se ha cansado!");
+                    .println("¡He tenido que cargar a Amedio porque se ha cansado!");
             return true;
         }
         return false;
@@ -89,9 +91,9 @@ public class App {
 
     // Calcula el avance de Marco en un dia teniendo en cuenta las variables
     // climáticas y el estado de Amedio. También muestra el progreso diario
-    public float AvanzarUnDiaMarco() {
+    public float AvanzarUnDiaMarco(float distanciaActualEntreMarcoYMadre) {
         float velocidadPromedioMarcoPorDia = (Math.round(random.nextFloat(9f, 16f) * 100f)) / 100f;
-        float horasDeTrayectoRecorridoMarcoPorDia = Math.round(random.nextFloat(7f, 11f) * 100f) / 100f;       
+        float horasDeTrayectoRecorridoMarcoPorDia = Math.round(random.nextFloat(7f, 11f) * 100f) / 100f;
 
         if (ProbabilidadClimatica()) {// Determina la condición climática y ajusta la velocidad dependiendo de esta.
             velocidadPromedioMarcoPorDia -= velocidadPromedioMarcoPorDia * REDUCCION_VELOCIDAD_MARCO_LLUVIA;
@@ -108,7 +110,12 @@ public class App {
         float distanciaRecorrida = Math
                 .round((velocidadPromedioMarcoPorDia * horasDeTrayectoRecorridoMarcoPorDia) * 100f)
                 / 100f;
-                
+
+        if (distanciaActualEntreMarcoYMadre < 50f)
+            distanciaRecorrida -= AvistamientoMadreMarco();// posible avistamiento de la madre de Marco
+
+        velocidadPromedioMarcoPorDia = Math.round(velocidadPromedioMarcoPorDia * 100f) / 100f;// redondeo a 2 decimales
+
         System.out.println("Avancé " + horasDeTrayectoRecorridoMarcoPorDia + " horas a " + velocidadPromedioMarcoPorDia
                 + " km/h recorriendo " + distanciaRecorrida + " km");
 
@@ -120,22 +127,43 @@ public class App {
     // diario
     public float AvanzarUnDiaMadreMarco() {
 
-        float velocidadMadreMarco = (Math.round(random.nextFloat(5, 10) * 100f)) / 100f; // Promedio de velocidad en km/h
-        float horasDeTrayectoRecorridoMadreMarcoPorDia = (Math.round(random.nextFloat(5, 10) * 100f)) / 100f; // horas de viaje
+        float velocidadMadreMarco = (Math.round(random.nextFloat(5, 10) * 100f)) / 100f; // Promedio de velocidad diaria
 
-        velocidadMadreMarco -= velocidadMadreMarco * ProbabilidadClimaticaMadreMarco(); //Determina la condición climática y ajusta la velocidad dependiendo de esta.
+        // Horas de Viaje
+        float horasDeTrayectoRecorridoMadreMarcoPorDia = (Math.round(random.nextFloat(5, 10) * 100f)) / 100f;
+
+        /*
+         * Determina la condición
+         * climática y ajusta la
+         * velocidad dependiendo de
+         * esta.
+         */
+        velocidadMadreMarco -= velocidadMadreMarco * ProbabilidadClimaticaMadreMarco();
 
         float distanciaRecorridaMadreMarco = Math
                 .round(velocidadMadreMarco * horasDeTrayectoRecorridoMadreMarcoPorDia * 100f) / 100f;
 
-        System.out.println("Mamá avanza " + horasDeTrayectoRecorridoMadreMarcoPorDia + " horas a " + velocidadMadreMarco
+        System.out.println("Mamá avanzó " + horasDeTrayectoRecorridoMadreMarcoPorDia + " horas a " + velocidadMadreMarco
                 + " km/h, recorriendo " + distanciaRecorridaMadreMarco + " km");
         return distanciaRecorridaMadreMarco;
 
     }
 
-    // Inicia el viaje de Marco y su madre, mostrando el progreso diario hasta que
-    // se reúnan
+    public float AvistamientoMadreMarco() {
+        double probabilidadAvistamientoMadreMarco = random.nextDouble();
+
+        if (probabilidadAvistamientoMadreMarco <= PROBABILIDAD_AVISTAMIENTO_MADRE_MARCO) {
+            System.out.println("¡Han visto a mamá cerca!");
+            return 25f;
+        }
+        return 0f;
+
+    }
+
+    /*
+     * Inicia el viaje de Marco y su madre, mostrando el progreso diario hasta que
+     * se reúnan
+     */
     public void IniciarViaje() {
         int dia = 1;
         float distanciaEntreMarcoYMadre = 350f;// km
@@ -148,7 +176,7 @@ public class App {
 
             System.out.println("Día " + dia);
 
-            distanciaEntreMarcoYMadre -= AvanzarUnDiaMarco();// Marco se acerca a su madre
+            distanciaEntreMarcoYMadre -= AvanzarUnDiaMarco(distanciaEntreMarcoYMadre);// Marco se acerca a su madre
 
             System.out.print("\n");
 

@@ -20,6 +20,7 @@ public class App {
     final float REDUCCION_VELOCIDAD_MARCO_POR_AMEDIO_CANSADO = 0.1f;
 
     final int VELOCIDAD_MADRE_MARCO = 80;// km por dia
+    //Utilizo 80 km porque con 100 km Marco nunca alcanza a su madre
 
     public static void main(String[] args) {
         App app = new App();
@@ -127,7 +128,7 @@ public class App {
         float distanciaRecorrida = Math.round(velocidadPromedioMarcoPorDia * horasDeTrayectoRecorridoMarcoPorDia * 100f)
                 / 100f;
 
-        System.out.println("Avance " + horasDeTrayectoRecorridoMarcoPorDia + " horas a " + velocidadPromedioMarcoPorDia
+        System.out.println("Avancé " + horasDeTrayectoRecorridoMarcoPorDia + " horas a " + velocidadPromedioMarcoPorDia
                 + " km/h recorriendo " + distanciaRecorrida + " km");
 
         return distanciaRecorrida;

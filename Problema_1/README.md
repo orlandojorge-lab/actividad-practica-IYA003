@@ -1,11 +1,13 @@
-## Folder Structure
+## Notas Importantes 
 
-The workspace contains two folders by default, where:
+El proyecto se divide en dos carpetas importantes:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- `src`: Donde está el archivo *.java* sin compilar
+- `bin`: Donde está el archivo *compilado* formato *.class*
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Notas del Problema 1 de la Actividad Práctica
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+En el mandato de la actividad práctica en el problema 1, se especifíca que la madre de Marco se aleja 100 km diarios, sin embargo en el siguiente problema dice que son 80 km. Por conveniencia del programa decidí que la madre de Marco se aleje 80 km en vez de 100 km, porque al utilizar los 100km Marco nunca alcanza a su madre.
+
+Este problema se puede comprobar al cambiar la constante *VELOCIDAD_MADRE_MARCO* en la línea 22 al valor de 100.
 
