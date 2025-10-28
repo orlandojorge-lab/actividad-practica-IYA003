@@ -2,13 +2,15 @@ import java.util.Random;
 
 public class App {
     Random random = new Random();
-
+    // Probabilidades climáticas expresadas en tanto por 1
     final float PROBABILIDAD_DE_LLUVIA_FUERTE = 0.1f;
     final float PROBABILIDAD_DE_LLUVIA_NORMAL = 0.3f;
     final float PROBABILIDAD_DE_SOL = 0.6f;
 
+    // Penalización de velocidad a Marco por el clima
     final float REDUCCION_VELOCIDAD_MARCO_LLUVIA = 0.25f;
 
+    // Probabilidades de que Amedio se canse o se escape expresadas en tanto por 1
     final float PROBABILIDAD_AMEDIO_SE_CANSE = 0.25f;
     final float PROBABILIDAD_AMEDIO_SE_ESCAPE = 0.15f;
     // Es posible que AMEDIO se canse y se escape
@@ -17,20 +19,64 @@ public class App {
     // si Amedio se cansa, Marco va un 10% más lento
     final float REDUCCION_VELOCIDAD_MARCO_POR_AMEDIO_CANSADO = 0.1f;
 
-    final int VELOCIDAD_MADRE_MARCO = 100;// km por dia
+    final int VELOCIDAD_MADRE_MARCO = 80;// km por dia
 
+    public static void main(String[] args) {
+        App app = new App();
+        app.IniciarViaje();
+    }
+
+    public void IniciarViaje() {
+        int dia = 1;
+        float distanciaEntreMarcoMadre = 350f;// km
+
+        System.out.println("DIARIO DEL VIAJE DE MARCO");
+        System.out.println("============================\n");
+        while (true) {
+            System.out.println("- - - - - - - - - - - - - - - - -");
+
+            System.out.println("Día " + dia);
+
+            distanciaEntreMarcoMadre -= AvanzarUnDiaMarco(); // Marco se acerca a su madre
+
+            System.out.print("\n");
+
+            distanciaEntreMarcoMadre += AvanzarUnDiaMadreMarco(); // La madre de Marco se aleja de Marco
+
+            distanciaEntreMarcoMadre = Math.round(distanciaEntreMarcoMadre * 100f) / 100f; // Redondea a 2 decimales
+
+            if (distanciaEntreMarcoMadre < 0)
+                distanciaEntreMarcoMadre = 0;
+
+            System.out.println("Al final del día " + dia + " la distancia entre Marco y su madre es de "
+                    + distanciaEntreMarcoMadre + " km\n");
+
+            if (distanciaEntreMarcoMadre == 0) { // Comprueba si Marco ha alcanzado a su madre
+                System.out.println("* * * * * * * * * * * * * * * * * * * * * *");
+                System.out.println("Marco ha logrado reunirse con su madre en el día " + dia + "!!!");
+                break;
+            }
+
+            dia++;
+
+        }
+
+    }
+
+    // Calcula si Amedio se cansa o no
     public boolean AmedioSeCansa() {
         double probabilidadAmedioSeCansa = random.nextDouble();
 
         if (probabilidadAmedioSeCansa <= PROBABILIDAD_AMEDIO_SE_CANSE) {
             System.out
-                    .println("He tenido que cargar a Amedio porque se ha cansado!");
+                    .println("¡He tenido que cargar a Amedio porque se ha cansado!");
             return true;
         }
         return false;
 
     }
 
+    // Calcula si Amedio se escapa o no
     public boolean AmedioSeEscapa() {
         double probabilidadAmedioSeEscapa = random.nextDouble();
 
@@ -42,6 +88,7 @@ public class App {
 
     }
 
+    // Calcula la probabilidad Climatica del dia en base a las constantes definidas
     public boolean ProbabilidadClimatica() {
         double probabilidadClimatica = random.nextDouble();
 
@@ -58,77 +105,41 @@ public class App {
 
     }
 
-    public float AvanzarUnDiaMarco(int dia) {
+    // Calcula el avance de Marco en un dia teniendo en cuenta las variables
+    // climáticas y el estado de Amedio
+    public float AvanzarUnDiaMarco() {
         float velocidadPromedioMarcoPorDia = (Math.round(random.nextFloat(9, 16) * 100f)) / 100f;
+
         float horasDeTrayectoRecorridoMarcoPorDia = Math.round(random.nextFloat(7, 11) * 100f) / 100f;
 
-        boolean estaLloviendo = ProbabilidadClimatica();
-        boolean amedioSeEscapo = AmedioSeEscapa();
-        boolean amedioSeCanso = AmedioSeCansa();
-
-        if (estaLloviendo) {
+        if (ProbabilidadClimatica()) {
             velocidadPromedioMarcoPorDia -= velocidadPromedioMarcoPorDia * REDUCCION_VELOCIDAD_MARCO_LLUVIA;
         }
 
-        if (amedioSeEscapo) {
+        if (AmedioSeEscapa()) {
             horasDeTrayectoRecorridoMarcoPorDia -= 2f;
         }
 
-        if (amedioSeCanso) {
+        if (AmedioSeCansa()) {
             velocidadPromedioMarcoPorDia -= velocidadPromedioMarcoPorDia * REDUCCION_VELOCIDAD_MARCO_POR_AMEDIO_CANSADO;
         }
 
         float distanciaRecorrida = Math.round(velocidadPromedioMarcoPorDia * horasDeTrayectoRecorridoMarcoPorDia * 100f)
                 / 100f;
+
         System.out.println("Avance " + horasDeTrayectoRecorridoMarcoPorDia + " horas a " + velocidadPromedioMarcoPorDia
                 + " km/h recorriendo " + distanciaRecorrida + " km");
 
         return distanciaRecorrida;
     }
 
+    // Calcula el avance de la madre de Marco en un dia
     public float AvanzarUnDiaMadreMarco() {
-        System.out.println("Mamá pudo avanza 100 km hoy");
+        System.out.println("Mamá pudo avanza 80 km hoy");
         return VELOCIDAD_MADRE_MARCO;
     }
 
-    public void IniciarViaje() {
-        int dia = 1;
-        float distanciaEntreMarcoMadre = 350f;// km
+    // Inicia el viaje de Marco y su madre,
+    // mostrando el progreso diario hasta que se reúnan
 
-        System.out.println("DIARIO DEL VIAJE DE MARCO");
-        System.out.println("============================\n");
-        while (true) {
-            System.out.println("- - - - - - - - - - - - - - - - -");
-
-            System.out.println("Día " + dia);
-
-            float distanciaRecorridaMarco = AvanzarUnDiaMarco(dia);
-
-            float distanciaRecorridaMadreMarco = AvanzarUnDiaMadreMarco();
-
-            distanciaEntreMarcoMadre -= (distanciaRecorridaMarco + distanciaRecorridaMadreMarco);
-
-            if (distanciaEntreMarcoMadre < 0f) {
-                distanciaEntreMarcoMadre = 0f;
-            }
-
-            System.out.println("Al final del día " + dia + " la distancia entre Marco y su madre es de "
-                    + distanciaEntreMarcoMadre + " km\n");
-
-            if (distanciaEntreMarcoMadre == 0) {
-                System.out.println("* * * * * * * * * * * * * * * * * * * * * *");
-
-                System.out.println("Marco ha logrado reunirse con su madre en el día " + dia + "!!!");
-                break;
-            }
-            dia++;
-
-        }
-
-    }
-
-    public static void main(String[] args) throws Exception {
-        App app = new App();
-        app.IniciarViaje();
-    }
 }
