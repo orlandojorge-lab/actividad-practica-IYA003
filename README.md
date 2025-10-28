@@ -1,9 +1,17 @@
-## Actividad Práctica De La Materia Fundamentos de la Programación. 👨‍💻
+# Actividad Práctica — Fundamentos de la Programación 👨‍💻
 
-> Creado por el estudiante: **Orlando José Jorge de la Cruz** 👋
- 
+**Autor:** Orlando José Jorge de la Cruz 👋  
+**Asignatura:** Fundamentos de la Programación
 
-*Recomiendo leer el archivo README.md de cada problema.*
+---
+
+Este repositorio contiene las soluciones a la *Actividad Práctica* de la materia.  
+Cada problema está ubicado en su propia carpeta con su respectivo código fuente.
+
+> ✅ Recomiendo leer el archivo **`README.md`** dentro de cada problema para comprender su funcionamiento, instrucciones de ejecución y notas adicionales.
+
+---
+
 
 
 
