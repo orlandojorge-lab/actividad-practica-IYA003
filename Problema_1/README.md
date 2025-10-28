@@ -1,13 +1,22 @@
-## Notas Importantes 
+# Notas Importantes
 
-El proyecto se divide en dos carpetas importantes:
+El proyecto está organizado en dos carpetas principales:
 
-- `src`: Donde está el archivo *.java* sin compilar
-- `bin`: Donde está el archivo *compilado* formato *.class*
+- **`src/`**: Contiene los archivos fuente con extensión `.java`.
+- **`bin/`**: Contiene los archivos compilados generados automáticamente con extensión `.class`.
 
-## Notas del Problema 1 de la Actividad Práctica
+---
 
-En el mandato de la actividad práctica en el problema 1, se especifíca que la madre de Marco se aleja 100 km diarios, sin embargo en el siguiente problema dice que son 80 km. Por conveniencia del programa decidí que la madre de Marco se aleje 80 km en vez de 100 km, porque al utilizar los 100km Marco nunca alcanza a su madre.
+# Aclaración sobre el Problema 1 de la Actividad Práctica
 
-Este problema se puede comprobar al cambiar la constante *VELOCIDAD_MADRE_MARCO* en la línea 22 al valor de 100.
+En el enunciado original, se menciona inicialmente que la madre de Marco se desplaza **100 km diarios**. Sin embargo, en el siguiente problema se indica que se desplaza **80 km diarios**.
+
+Para mantener coherencia y permitir que Marco pueda alcanzarla en el cálculo del programa, utilicé la velocidad de **80 km diarios** en lugar de 100 km.
+
+Este comportamiento puede verificarse modificando la constante ubicada en la línea 22 del archivo correspondiente:
+
+```java
+final int VELOCIDAD_MADRE_MARCO = 80;
+````
+Si se cambia el valor a 100, el programa mostrará que Marco nunca consigue alcanzarla.
 
