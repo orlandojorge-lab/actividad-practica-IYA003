@@ -19,8 +19,8 @@ public class App {
     // si Amedio se cansa, Marco va un 10% más lento
     final float REDUCCION_VELOCIDAD_MARCO_POR_AMEDIO_CANSADO = 0.1f;
 
-    final int VELOCIDAD_MADRE_MARCO = 80;// km por dia
-    //Utilizo 80 km porque con 100 km Marco nunca alcanza a su madre
+    final int VELOCIDAD_MADRE_MARCO = 100;// km por dia
+    
 
     public static void main(String[] args) {
         App app = new App();
@@ -44,7 +44,7 @@ public class App {
 
             distanciaEntreMarcoMadre += AvanzarUnDiaMadreMarco(); // La madre de Marco se aleja de Marco
 
-            distanciaEntreMarcoMadre = Math.round(distanciaEntreMarcoMadre * 100f) / 100f; // Redondea a 2 decimales
+            distanciaEntreMarcoMadre = Math.round(distanciaEntreMarcoMadre );
 
             if (distanciaEntreMarcoMadre < 0)
                 distanciaEntreMarcoMadre = 0;
@@ -109,24 +109,23 @@ public class App {
     // Calcula el avance de Marco en un dia teniendo en cuenta las variables
     // climáticas y el estado de Amedio
     public float AvanzarUnDiaMarco() {
-        float velocidadPromedioMarcoPorDia = (Math.round(random.nextFloat(9, 16) * 100f)) / 100f;
+        float velocidadPromedioMarcoPorDia = (Math.round(random.nextFloat(10, 16) )) ;
 
-        float horasDeTrayectoRecorridoMarcoPorDia = Math.round(random.nextFloat(7, 11) * 100f) / 100f;
+        float horasDeTrayectoRecorridoMarcoPorDia = Math.round(random.nextFloat(8, 11));
 
         if (ProbabilidadClimatica()) {
             velocidadPromedioMarcoPorDia -= velocidadPromedioMarcoPorDia * REDUCCION_VELOCIDAD_MARCO_LLUVIA;
         }
 
-        if (AmedioSeEscapa()) {
+        if (AmedioSeEscapa()) 
             horasDeTrayectoRecorridoMarcoPorDia -= 2f;
-        }
+        
 
         if (AmedioSeCansa()) {
             velocidadPromedioMarcoPorDia -= velocidadPromedioMarcoPorDia * REDUCCION_VELOCIDAD_MARCO_POR_AMEDIO_CANSADO;
         }
 
-        float distanciaRecorrida = Math.round(velocidadPromedioMarcoPorDia * horasDeTrayectoRecorridoMarcoPorDia * 100f)
-                / 100f;
+        float distanciaRecorrida = Math.round(velocidadPromedioMarcoPorDia * horasDeTrayectoRecorridoMarcoPorDia);
 
         System.out.println("Avancé " + horasDeTrayectoRecorridoMarcoPorDia + " horas a " + velocidadPromedioMarcoPorDia
                 + " km/h recorriendo " + distanciaRecorrida + " km");
@@ -136,7 +135,7 @@ public class App {
 
     // Calcula el avance de la madre de Marco en un dia
     public float AvanzarUnDiaMadreMarco() {
-        System.out.println("Mamá pudo avanza 80 km hoy");
+        System.out.println("Mamá pudo avanza 100 km hoy");
         return VELOCIDAD_MADRE_MARCO;
     }
 

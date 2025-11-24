@@ -90,8 +90,8 @@ public class App {
     // Calcula el avance de Marco en un dia teniendo en cuenta las variables
     // climáticas y el estado de Amedio. También muestra el progreso diario
     public float AvanzarUnDiaMarco() {
-        float velocidadPromedioMarcoPorDia = (Math.round(random.nextFloat(9f, 16f) * 100f)) / 100f;
-        float horasDeTrayectoRecorridoMarcoPorDia = Math.round(random.nextFloat(7f, 11f) * 100f) / 100f;       
+        float velocidadPromedioMarcoPorDia = (Math.round(random.nextFloat(10f, 16f) )) ;
+        float horasDeTrayectoRecorridoMarcoPorDia = Math.round(random.nextFloat(8f, 11f) ) / 100f;       
 
         if (ProbabilidadClimatica()) {// Determina la condición climática y ajusta la velocidad dependiendo de esta.
             velocidadPromedioMarcoPorDia -= velocidadPromedioMarcoPorDia * REDUCCION_VELOCIDAD_MARCO_LLUVIA;
@@ -120,7 +120,7 @@ public class App {
     // diario
     public float AvanzarUnDiaMadreMarco() {
 
-        float velocidadMadreMarco = (Math.round(random.nextFloat(5, 10) * 100f)) / 100f; // Promedio de velocidad en km/h
+        float velocidadMadreMarco = (Math.round(random.nextFloat(6, 10) * 100f)) / 100f; // Promedio de velocidad en km/h
         float horasDeTrayectoRecorridoMadreMarcoPorDia = (Math.round(random.nextFloat(5, 10) * 100f)) / 100f; // horas de viaje
 
         velocidadMadreMarco -= velocidadMadreMarco * ProbabilidadClimaticaMadreMarco(); //Determina la condición climática y ajusta la velocidad dependiendo de esta.
